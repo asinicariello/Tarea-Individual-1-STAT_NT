@@ -1,0 +1,81 @@
+---
+title: "Tarea Individual 1 STAT_NT"
+author: "Ana Sinicariello"
+date: "Entregar el Lunes 16 de Abril"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE}
+library(ggplot2)
+library(gapminder)
+```
+
+## Ejercicio 1
+
+```{r, echo=TRUE}
+ggplot(data=gapminder, aes(x = lifeExp, y = year, color = continent))+
+  labs(x = "Esperanza de Vida", y = "Año", color = "Continente") +
+  geom_point() + geom_smooth(method = "lm", se=FALSE)
+```
+
+Este gráfico muestra como cambia la esperanza de vida en cada continente con el paso de los años. Las lineas de regresión muestra la tendencia de como cambia la relación entre los datos para cada continente. Algo interesante es que en el pasado la diferencia de esperanza de vida entre los continentes era mas grande. Ahora, la esperanza de la vida es mas parecido entre continentes.
+
+## Ejercicio 2 
+
+```{r, echo=TRUE}
+ggplot(data = gapminder, aes(x = lifeExp, y = year, color = continent)) +
+  labs(x = "Esperanza de Vida", y = "Año", color = "Continente") +
+  geom_smooth(method = "lm", se=FALSE)
+```
+
+Geom_ adivina que tipo de grafico ggplot va a hacer. Con geom_smooth y sin geom_point solo muestra solo las lineas de regresión de los datos, no los puntos de data especificos.
+
+## Ejercicio 3
+
+```{r, echo = FALSE}
+ggplot(gapminder, aes(gdpPercap, lifeExp, colour = continent)) +
+    geom_point() 
+```
+
+En este graáfico sobrecargado, puedes modificar la transparencia y el tamaño de los puntos. Por ejemplo:
+
+```{r, echo = FALSE}
+ggplot(gapminder, aes(gdpPercap, lifeExp, colour = continent)) + 
+  labs(x = "GDP Per Capita", y="Life Expectancy", colour = "Continent") + 
+  geom_point(size = 1/3, alpha = 1/3) 
+```
+
+O, puedes usar facetas para muestra los datos de los continentes en sus propios gráficos. Por ejemplo:
+
+```{r, echo = FALSE}
+ggplot(gapminder, aes(gdpPercap, lifeExp)) +
+    labs(x = "GDP Per Capita", y="Life Expectancy", facet = "Continent") + 
+    geom_point(alpha=1/10) + facet_grid( ~continent)
+```
+
+Alguna caracteristica interesante es que la esperanza de la vida y GDP Per Capita no tienen una relacion lineal.
+
+## Ejercicio 4
+
+```{r, echo=TRUE}
+ggplot(data = gapminder, aes(x = year, y = gdpPercap, color = country)) +
+  labs(x = "Año", y = "GDP Per Capita") + theme(legend.position="none") +
+  geom_line()  + facet_grid( ~continent)
+```
+
+Este grafico muestra que el GDP Per Capita incrementa a lo largo del tiempo en cada pais en cada continente. Una cosa interesante es que hay un pais en Asia que tiene disminucion profunda de GDP Per Capita, cuando la mayoria de paises en el mundo tienen crecimiento de GDP.
+
+## Ejercicio 5 
+
+```{r, echo=TRUE}
+data2 <- filter(gapminder, continent == "Europe")
+ggplot(data=data2, aes(x = year, y = pop, color = country))+
+  labs(x = "Esperanza de Vida", y = "Año", color = "Continente") +
+  geom_point() + geom_smooth(method = "lm", se=FALSE)
+```
+
+Este grafico muestra como cambia poblacion a lo largo del tiempo en los paises de europa. Es interesante como en Turkey la poblacion creció mucho mas rapido que cualquier otro pais en europa.
